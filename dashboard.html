@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Budget Manager Pro</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="manifest" href="manifest.json" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <h2>💰 Budget Pro</h2>
+    <a href="#dashboard" data-i18n="dashboard">Dashboard</a>
+    <a href="#profile" onclick="showProfile()" data-i18n="profile">Profile</a>
+    <a href="#" onclick="logout()" data-i18n="logout">Logout</a>
+  </aside>
+<link rel="icon" type="image/png" href="assets/logo.png">
+  <main class="dashboard">
+    <header class="dash-header">
+      <div>
+        <h1 data-i18n="dashboard">Dashboard</h1>
+        <p id="welcome">Bienvenue</p>
+      </div>
+      <div class="header-actions">
+        <select id="langSelect" onchange="setLanguage(this.value)">
+          <option value="fr">FR</option>
+          <option value="ar">AR</option>
+        </select>
+        <button id="themeBtn">🌙</button>
+        <button id="installBtn" style="display:none;">Installer App</button>
+      </div>
+    </header>
+
+    <div id="toast"></div>
+
+    <section class="cards">
+      <div class="stat-card blue"><p data-i18n="balance">Solde</p><h2 id="balance">0 DH</h2></div>
+      <div class="stat-card green"><p data-i18n="income">Revenus</p><h2 id="income">0 DH</h2></div>
+      <div class="stat-card red"><p data-i18n="expense">Dépenses</p><h2 id="expense">0 DH</h2></div>
+      <div class="stat-card orange"><p data-i18n="monthly_budget">Budget mensuel</p><h2 id="budgetLeft">0 DH</h2></div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <h2 data-i18n="add_transaction">Ajouter transaction</h2>
+        <input id="description" placeholder="Description ex: Taxi" />
+        <input id="amount" type="number" placeholder="Montant DH" />
+        <input id="date" type="date" />
+        <select id="category">
+          <option>Tram & Taxis</option>
+          <option>Café</option>
+          <option>Loisirs</option>
+          <option>Téléphone</option>
+          <option>Salaire</option>
+          <option>Maison</option>
+          <option>Autre</option>
+        </select>
+        <select id="type">
+          <option value="expense">Dépense</option>
+          <option value="income">Revenu</option>
+        </select>
+        <button onclick="addTransaction()" data-i18n="add_btn">Ajouter / Modifier</button>
+      </div>
+      <div class="logo">
+    <img src="assets/logo.png" alt="Logo">
+    <h2>TABLE DE BUDGET</h2>
+</div>
+
+      <div class="panel">
+        <h2 data-i18n="settings">Paramètres</h2>
+        <label data-i18n="monthly_budget">Budget mensuel</label>
+        <input id="monthlyBudget" type="number" placeholder="Ex: 3000" />
+        <button onclick="saveBudget()" data-i18n="save">Sauvegarder</button>
+
+        <hr>
+        <h3 data-i18n="profile">Profile</h3>
+        <input id="profileName" placeholder="Nom" />
+        <input id="profilePhone" placeholder="Téléphone" />
+        <button onclick="saveProfile()" data-i18n="save_profile">Sauvegarder profile</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <h2 data-i18n="chart_income_expense">Revenus / Dépenses</h2>
+        <canvas id="budgetChart"></canvas>
+      </div>
+
+      <div class="panel">
+        <h2 data-i18n="chart_category">Dépenses par catégorie</h2>
+        <canvas id="categoryChart"></canvas>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="table-top">
+        <h2 data-i18n="history">Historique</h2>
+        <div>
+          <button onclick="exportPDF()">PDF</button>
+          <button onclick="exportExcel()">Excel</button>
+        </div>
+      </div>
+
+      <input id="search" placeholder="Recherche..." oninput="renderTransactions()" />
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="date">Date</th>
+              <th data-i18n="description">Description</th>
+              <th data-i18n="category">Catégorie</th>
+              <th data-i18n="type">Type</th>
+              <th data-i18n="amount">Montant</th>
+              <th data-i18n="actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="transactionTable"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="firebase.js"></script>
+  <script src="lang.js"></script>
+  <script src="auth.js"></script>
+  <script src="chart.js"></script>
+  <script src="pdf.js"></script>
+  <script src="excel.js"></script>
+  <script src="app.js"></script>
+  <script src="pwa.js"></script>
+</body>
+</html>

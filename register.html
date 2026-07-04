@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - Budget Manager Pro</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body class="auth-page">
+  <div class="auth-card">
+    <h1>💰 Budget Pro</h1>
+    <h2 data-i18n="register_title">Créer un compte</h2>
+
+    <input type="text" id="registerName" placeholder="Nom complet" />
+    <input type="email" id="registerEmail" placeholder="Email" />
+    <input type="password" id="registerPassword" placeholder="Mot de passe" />
+
+    <button onclick="register()" data-i18n="register_btn">Créer compte</button>
+
+    <p><span data-i18n="already_account">Déjà inscrit ?</span> <a href="login.html" data-i18n="login_btn">Se connecter</a></p>
+  </div>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+
+  <script src="firebase.js"></script>
+  <script src="lang.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>
